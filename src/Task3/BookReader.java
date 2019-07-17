@@ -1,6 +1,7 @@
 package Task3;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
 import java.util.Scanner;
 
@@ -26,16 +27,15 @@ public class BookReader {
     }
 
     public static File inputFile(){
-        File file;
-        JFileChooser fileChooser = new JFileChooser();
-        while (true) {
+        File file = null;
+        JFileChooser fileChooser = new JFileChooser("src/Task3");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text file .txt","txt");
+        fileChooser.setFileFilter(filter);
+        while (file == null) {
             int ref = fileChooser.showDialog(null, "Выберите файл");
 
             if (ref == JFileChooser.APPROVE_OPTION) {
                 file = fileChooser.getSelectedFile();
-                if (file.getName().endsWith(".txt")) {
-                    break;
-                }
             }else{
                 System.exit(0);
             }
@@ -69,7 +69,7 @@ public class BookReader {
     public void showPage(int page){
         int symbolsInPage = 1800;
         try(RandomAccessFile raf = new RandomAccessFile(textFile, "r")) {
-            raf.seek(page * symbolsInPage);
+            raf.seek((page-1) * symbolsInPage);
             for(int i = 0; i <symbolsInPage; i++){
                 System.out.print((char)raf.read());
             }
