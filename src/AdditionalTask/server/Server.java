@@ -12,7 +12,6 @@ public class Server {
     public Server() {
         ServerSocket server = null;
         Socket socket = null;
-
         try {
             server = new ServerSocket(8181);
             System.out.println("Server start");

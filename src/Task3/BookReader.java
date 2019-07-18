@@ -3,6 +3,7 @@ package Task3;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BookReader {
