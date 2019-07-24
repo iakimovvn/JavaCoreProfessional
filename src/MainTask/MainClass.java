@@ -6,6 +6,7 @@ public class MainClass {
 
     public static final int CARS_COUNT = 4;
     public static final CyclicBarrier CYCLIC_BARRIER = new CyclicBarrier(CARS_COUNT , MainClass::printStartRace);
+
     private static boolean isStartRace = false;
 
 

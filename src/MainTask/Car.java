@@ -38,6 +38,8 @@ public class Car implements Runnable {
             race.getStages().get(i).go(this);
         }
 
+
+
         if(MainClass.CYCLIC_BARRIER.getNumberWaiting() == 0){
             System.out.println(this.name+" WIN");
         }
