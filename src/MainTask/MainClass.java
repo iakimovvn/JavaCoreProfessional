@@ -12,7 +12,7 @@ public class MainClass {
 
     private static void printStartRace(){
         String resWord = (isStartRace)?"закончилась":"началась";
-        System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка "+resWord+"!!!");
+        System.out.printf("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка %s!!!\n",resWord);
         isStartRace = !isStartRace;
     }
 
