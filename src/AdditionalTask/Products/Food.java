@@ -10,4 +10,9 @@ public class Food extends Product {
     public String toString() {
         return "Food weight: " + weight ;
     }
+
+    @Override
+    public Food clone() {
+        return new Food(this.weight);
+    }
 }

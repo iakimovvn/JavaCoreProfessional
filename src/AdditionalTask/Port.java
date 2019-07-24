@@ -4,15 +4,15 @@ import AdditionalTask.Products.Product;
 
 import java.util.concurrent.locks.ReentrantLock;
 
-public class Port<T extends Product>{
-    private final T WEIGHT_ONE_LOADING;
+public class Port{
+    private final Product WEIGHT_ONE_LOADING;
 
     private String portName;
 
-    private T product;
+    private Product product;
     ReentrantLock reentrantLock;
 
-    public Port(String portName, T product, T weightOneLoading) {
+    public Port(String portName, Product product, Product weightOneLoading) {
         this.portName = portName;
         this.product = product;
         this.reentrantLock = new ReentrantLock();
@@ -22,7 +22,7 @@ public class Port<T extends Product>{
     public void loading(Ship ship){
         reentrantLock.lock();
         System.out.println(ship.getName()+" начал погрузку в "+portName);
-        while(product.getWeight()>=WEIGHT_ONE_LOADING.getWeight() && ship.isLoadOneUnit(WEIGHT_ONE_LOADING)){
+        while(product.getWeight()>=WEIGHT_ONE_LOADING.getWeight() && ship.isLoadOneUnit(getWEIGHT_ONE_LOADING())){
             product.subtract(WEIGHT_ONE_LOADING.getWeight());
             try {
                 Thread.sleep(1000);
@@ -39,8 +39,8 @@ public class Port<T extends Product>{
         return product.getWeight();
     }
 
-    public T getWEIGHT_ONE_LOADING() {
-        return ;
+    public Product getWEIGHT_ONE_LOADING() {
+        return WEIGHT_ONE_LOADING.clone();
     }
 
     public String getPortName() {

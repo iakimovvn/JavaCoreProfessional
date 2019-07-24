@@ -1,7 +1,7 @@
 package AdditionalTask.Products;
 
 
-public abstract class Product  {
+public abstract class Product implements Cloneable {
     protected int weight;
 
     public int getWeight() {
@@ -20,4 +20,8 @@ public abstract class Product  {
         this.weight-=weight;
 
     }
+
+    public abstract Product clone();
+
+
 }

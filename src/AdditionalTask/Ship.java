@@ -52,6 +52,7 @@ public class Ship  implements Runnable {
         }else{
             if(cargo.getWeight()+productFromPort.getWeight() <= cargoMaxWeight) {
                 cargo.add(productFromPort.getWeight());
+                System.out.println(this.getName()+ " погрузил 100 единиц");
                 isOnBoard = true;
             }
         }

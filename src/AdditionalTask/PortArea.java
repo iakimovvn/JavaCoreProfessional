@@ -40,6 +40,10 @@ public class PortArea extends Semaphore {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        finally {
+            System.out.println(ship.getName() + " вышел из погрузки");
+            this.release();
+        }
 //        }else{
 //            System.out.println(ship.getName()+"");
 //        }
