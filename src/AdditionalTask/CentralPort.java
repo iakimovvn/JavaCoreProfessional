@@ -1,33 +1,44 @@
 package AdditionalTask;
 
+import AdditionalTask.Products.Clothes;
+import AdditionalTask.Products.Food;
+import AdditionalTask.Products.Fuel;
+
 public class CentralPort {
 
     protected final int WEIGHT_ONE_LOADING = 100;
 
-    private int food = 0;
-    private int fuel = 0;
-    private int clothes = 0;
+    private Food food ;
+    private Fuel fuel ;
+    private Clothes clothes;
+
+    public CentralPort() {
+        this.food = new Food(0);
+        this.fuel = new Fuel(0);
+        this.clothes = new Clothes(0);
+    }
 
     public synchronized void unloading (Ship ship){
-        while(!ship.pickUpFood(WEIGHT_ONE_LOADING)){
-            food+=WEIGHT_ONE_LOADING;
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        if(ship.cargo == null){
+            System.out.println(ship.getName()+" вернулся в порт пустым");
+        }else {
+            System.out.println(ship.getName()+" начал разгрузку");
+            if (ship.cargo instanceof Food) {
+                unloadFood(ship);
+            } else if (ship.cargo instanceof Fuel) {
+                unloadFuel(ship);
+            } else {
+                unloadClothes(ship);
             }
-        }
-        while(!ship.pickUpFuel(WEIGHT_ONE_LOADING)){
-            fuel+=WEIGHT_ONE_LOADING;
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+            ship.washHolds();
+            System.out.println(ship.getName()+" закончил разгрузку");
 
-        while(!ship.pickUpClothes(WEIGHT_ONE_LOADING)){
-            fuel+=WEIGHT_ONE_LOADING;
+        }
+    }
+
+    private void unloadFood(Ship ship){
+        while(!ship.isUnLoadOneUnit(WEIGHT_ONE_LOADING)){
+            food.add(WEIGHT_ONE_LOADING);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -36,11 +47,35 @@ public class CentralPort {
         }
     }
 
+    private void unloadFuel(Ship ship){
+        while(!ship.isUnLoadOneUnit(WEIGHT_ONE_LOADING)){
+            fuel.add(WEIGHT_ONE_LOADING);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void unloadClothes(Ship ship){
+        while(!ship.isUnLoadOneUnit(WEIGHT_ONE_LOADING)){
+            clothes.add(WEIGHT_ONE_LOADING);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
     public void info(){
         System.out.println("Сейчас в Центральном порту: ");
-        System.out.println("Food: "+food);
-        System.out.println("Fuel: "+fuel);
-        System.out.println("Clothes:"+clothes);
+        System.out.println(food);
+        System.out.println(fuel);
+        System.out.println(clothes);
     }
 
 

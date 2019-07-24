@@ -17,21 +17,23 @@ public class Ship  implements Runnable {
 //    private Food food;
 //    private Clothes clothes;
 
-    private Product cargo;
+    protected Product cargo;
     private int cargoMaxWeight;
+    private PortArea portArea;
 
     private Strait strait;
     private CentralPort centralPort;
 
 
 
-    public Ship(String name, int max_fuel, int max_clothes, int max_food, Strait strait, CentralPort centralPort) {
+    public Ship(String name, int max_fuel, int max_clothes, int max_food, Shipping shipping) {
         this.name = name;
         MAX_FUEL = max_fuel;
         MAX_CLOTHES = max_clothes;
         MAX_FOOD = max_food;
-        this.strait = strait;
-        this.centralPort = centralPort;
+        this.strait = shipping.strait;
+        this.centralPort = shipping.centralPort;
+        this.portArea = shipping.portArea;
 
 //        this.fuel = new Fuel(0);
 //        this.food = new Food(0);
@@ -94,7 +96,7 @@ public class Ship  implements Runnable {
 
 
 
-    public boolean addProduct(Product productFromPort){
+    public boolean isLoadOneUnit(Product productFromPort){
         boolean isOnBoard = false;
         if(cargo == null){
             cargo = productFromPort;
@@ -108,6 +110,19 @@ public class Ship  implements Runnable {
         }
         return isOnBoard;
     }
+
+    public boolean isUnLoadOneUnit(int oneUnitWeight){
+        if(cargo.getWeight() - oneUnitWeight >= 0) {
+            cargo.subtract(oneUnitWeight);
+            return true;
+        }
+        return false;
+    }
+
+    public void washHolds(){
+        cargo = null;
+    }
+
 
 
 
@@ -127,15 +142,10 @@ public class Ship  implements Runnable {
     public void run() {
         tripBetweenPorts();
 
-
-
-
-
-
-
-
+        portArea.loadingLine(Ship.this);
 
         tripBetweenPorts();
+
         centralPort.unloading(Ship.this);
     }
 
@@ -156,4 +166,5 @@ public class Ship  implements Runnable {
             e.printStackTrace();
         }
     }
+
 }
