@@ -23,13 +23,15 @@ public class PortArea extends Semaphore {
                     System.out.println(ship.getName() + " ждет в очереди на погрузку");
                 }
                 this.acquire();
-                System.out.println(ship.getName() + "дождался очереди");
+                System.out.println(ship.getName() + " получил разрешение на вход");
 
                 for (Port port : ports) {
                     if (!port.reentrantLock.isLocked() && port.getProductsWeight() != 0) {
                         port.loading(ship);
                         if (port.getProductsWeight() == 0) {
+                            System.out.println(port.getPortName() + " пуст");
                             this.reducePermits(1);
+
                         }
                         break;
                     }

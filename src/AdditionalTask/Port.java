@@ -22,7 +22,7 @@ public class Port<T extends Product>{
     public void loading(Ship ship){
         reentrantLock.lock();
         System.out.println(ship.getName()+" начал погрузку в "+portName);
-        while(product.getWeight()>=WEIGHT_ONE_LOADING.getWeight() && !ship.isLoadOneUnit(WEIGHT_ONE_LOADING)){
+        while(product.getWeight()>=WEIGHT_ONE_LOADING.getWeight() && ship.isLoadOneUnit(WEIGHT_ONE_LOADING)){
             product.subtract(WEIGHT_ONE_LOADING.getWeight());
             try {
                 Thread.sleep(1000);
@@ -37,5 +37,13 @@ public class Port<T extends Product>{
 
     public int getProductsWeight(){
         return product.getWeight();
+    }
+
+    public T getWEIGHT_ONE_LOADING() {
+        return ;
+    }
+
+    public String getPortName() {
+        return portName;
     }
 }

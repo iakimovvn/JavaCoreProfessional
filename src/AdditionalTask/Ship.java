@@ -1,10 +1,12 @@
 package AdditionalTask;
 
 
-import AdditionalTask.Products.Clothes;
 import AdditionalTask.Products.Food;
 import AdditionalTask.Products.Fuel;
 import AdditionalTask.Products.Product;
+
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 
 public class Ship  implements Runnable {
     private String name;
@@ -13,13 +15,11 @@ public class Ship  implements Runnable {
     private final int MAX_CLOTHES;
     private final int MAX_FOOD;
 
-//    private Fuel fuel;
-//    private Food food;
-//    private Clothes clothes;
 
     protected Product cargo;
     private int cargoMaxWeight;
     private PortArea portArea;
+    private CyclicBarrier cyclicBarrier;
 
     private Strait strait;
     private CentralPort centralPort;
@@ -34,66 +34,12 @@ public class Ship  implements Runnable {
         this.strait = shipping.strait;
         this.centralPort = shipping.centralPort;
         this.portArea = shipping.portArea;
-
-//        this.fuel = new Fuel(0);
-//        this.food = new Food(0);
-//        this.clothes = new Clothes(0);
+        this.cyclicBarrier= shipping.cyclicBarrier;
     }
 
     public String getName() {
         return name;
     }
-//
-//    public boolean addFuel (int weight){
-//        if((fuel + weight)<= MAX_FUEL){
-//            fuel+=weight;
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public boolean addFood (int weight){
-//        if((food + weight)<= MAX_FOOD){
-//            food+=weight;
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public boolean addClothes (int weight){
-//        if((clothes + weight)<= MAX_CLOTHES){
-//            clothes+=weight;
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public boolean pickUpFuel(int weight){
-//        if(fuel - weight >= 0){
-//            fuel-=weight;
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//
-//    public boolean pickUpFood(int weight){
-//        if(food - weight >= 0){
-//            food-=weight;
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public boolean pickUpClothes(int weight){
-//        if(clothes - weight >= 0){
-//            clothes-=weight;
-//            System.out.printf("%s pick up %s products");
-//            return true;
-//        }
-//        return false;
-//    }
-
 
 
     public boolean isLoadOneUnit(Product productFromPort){
@@ -101,6 +47,7 @@ public class Ship  implements Runnable {
         if(cargo == null){
             cargo = productFromPort;
             identifyLoadingProductForMax(cargo);
+            System.out.println(this.getName()+ " погрузил 100 единиц");
             isOnBoard = true;
         }else{
             if(cargo.getWeight()+productFromPort.getWeight() <= cargoMaxWeight) {
@@ -114,6 +61,8 @@ public class Ship  implements Runnable {
     public boolean isUnLoadOneUnit(int oneUnitWeight){
         if(cargo.getWeight() - oneUnitWeight >= 0) {
             cargo.subtract(oneUnitWeight);
+            System.out.println(this.getName()+ " разгрузил 100 единиц");
+
             return true;
         }
         return false;
@@ -140,13 +89,23 @@ public class Ship  implements Runnable {
 
     @Override
     public void run() {
-        tripBetweenPorts();
 
-        portArea.loadingLine(Ship.this);
+        while (portArea.availablePermits()!= 0) {
+            tripBetweenPorts();
 
-        tripBetweenPorts();
+            portArea.loadingLine(Ship.this);
 
-        centralPort.unloading(Ship.this);
+            tripBetweenPorts();
+
+            centralPort.unloading(Ship.this);
+        }
+        try {
+            cyclicBarrier.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (BrokenBarrierException e) {
+            e.printStackTrace();
+        }
     }
 
     private void tripBetweenPorts(){

@@ -37,7 +37,7 @@ public class CentralPort {
     }
 
     private void unloadFood(Ship ship){
-        while(!ship.isUnLoadOneUnit(WEIGHT_ONE_LOADING)){
+        while(ship.isUnLoadOneUnit(WEIGHT_ONE_LOADING)){
             food.add(WEIGHT_ONE_LOADING);
             try {
                 Thread.sleep(1000);
@@ -48,7 +48,7 @@ public class CentralPort {
     }
 
     private void unloadFuel(Ship ship){
-        while(!ship.isUnLoadOneUnit(WEIGHT_ONE_LOADING)){
+        while(ship.isUnLoadOneUnit(WEIGHT_ONE_LOADING)){
             fuel.add(WEIGHT_ONE_LOADING);
             try {
                 Thread.sleep(1000);
@@ -59,7 +59,7 @@ public class CentralPort {
     }
 
     private void unloadClothes(Ship ship){
-        while(!ship.isUnLoadOneUnit(WEIGHT_ONE_LOADING)){
+        while(ship.isUnLoadOneUnit(WEIGHT_ONE_LOADING)){
             clothes.add(WEIGHT_ONE_LOADING);
             try {
                 Thread.sleep(1000);
