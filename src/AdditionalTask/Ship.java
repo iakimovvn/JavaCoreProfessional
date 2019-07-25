@@ -21,6 +21,8 @@ public class Ship  implements Runnable {
     private PortArea portArea;
     private CyclicBarrier cyclicBarrier;
 
+    private boolean isTripToHome = false;
+
     private Strait strait;
     private CentralPort centralPort;
 
@@ -102,15 +104,13 @@ public class Ship  implements Runnable {
         }
         try {
             cyclicBarrier.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (BrokenBarrierException e) {
+        } catch (InterruptedException |BrokenBarrierException e) {
             e.printStackTrace();
         }
     }
 
     private void tripBetweenPorts(){
-        String action = (cargo != null)?"разгружаться":"на погрузку";
+        String action = (isTripToHome)?"разгружаться":"на погрузку";
         System.out.println(name+" пошёл "+action);
         try {
             Thread.sleep(1000);
@@ -125,6 +125,8 @@ public class Ship  implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        isTripToHome = !isTripToHome;
     }
 
 }
