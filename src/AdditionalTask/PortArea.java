@@ -3,26 +3,27 @@ package AdditionalTask;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class PortArea extends Semaphore {
     private ArrayList<Port> ports;
-    private volatile int portsWithStaff;
+    private volatile AtomicInteger portsWithStaff;
 
 
 
     public PortArea(Port... ports) {
         super(ports.length);
         this.ports = new ArrayList<>(Arrays.asList(ports));
-        this.portsWithStaff = ports.length;
+        this.portsWithStaff = new AtomicInteger(ports.length);
     }
 
     public int getPortsWithStaff() {
-        return portsWithStaff;
+        return portsWithStaff.get();
     }
 
     public void loadingLine(Ship ship){
 
-        if(portsWithStaff > 0) {
+        if(portsWithStaff.get() > 0) {
 
             try {
                 if (this.availablePermits() == 0) {
@@ -35,12 +36,12 @@ public class PortArea extends Semaphore {
                 System.out.println(ship.getName() + " получил разрешение на вход");
 
                 for (Port port : ports) {
-                    if (!port.isPortLocked()) {
+                    if (port.isPortLocked()) {
                         port.loading(ship);
                         if (port.getProductsWeight() == 0) {
                             System.out.println(port.getPortName() + " пуст");
                             this.reducePermits(1);
-                            portsWithStaff--;
+                            portsWithStaff.decrementAndGet();
 
                         }
                         break;
@@ -55,7 +56,7 @@ public class PortArea extends Semaphore {
             this.release();
         }
         }else{
-            System.out.println(ship.getName()+"возвращается домой пустой");
+            System.err.println(ship.getName()+"возвращается домой пустой, он слишком долго плыл");
         }
 
     }

@@ -22,6 +22,7 @@ public abstract class Product implements Cloneable {
     }
 
     public abstract Product clone();
+    public abstract String getTitle();
 
 
 }

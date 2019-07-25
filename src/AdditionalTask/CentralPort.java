@@ -20,7 +20,7 @@ public class CentralPort {
 
     public synchronized void unloading (Ship ship){
         if(ship.cargo == null){
-            System.out.println(ship.getName()+" вернулся в порт пустым");
+            System.err.println(ship.getName()+" вернулся в порт пустым");
         }else {
             System.out.println(ship.getName()+" начал разгрузку");
             if (ship.cargo instanceof Food) {

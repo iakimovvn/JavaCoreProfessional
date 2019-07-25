@@ -14,4 +14,9 @@ public class Clothes extends Product {
     public Clothes clone() {
         return new Clothes(this.weight);
     }
+
+    @Override
+    public String getTitle() {
+        return "Clothes";
+    }
 }

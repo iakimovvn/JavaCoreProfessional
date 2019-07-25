@@ -15,4 +15,10 @@ public class Fuel extends Product {
         return new Fuel(this.weight);
     }
 
+    @Override
+    public String getTitle() {
+        return "Fuel";
+    }
+
+
 }

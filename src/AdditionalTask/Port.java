@@ -48,7 +48,7 @@ public class Port{
     }
 
     public synchronized boolean isPortLocked(){
-        return reentrantLock.isLocked() && getProductsWeight()!=0;
+        return !reentrantLock.isLocked() && getProductsWeight()!=0;
     }
 
 }

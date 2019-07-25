@@ -47,12 +47,12 @@ public class Ship  implements Runnable {
         if(cargo == null){
             cargo = productFromPort;
             identifyLoadingProductForMax(cargo);
-            System.out.println(this.getName()+ " погрузил 100 единиц");
+            System.out.println(this.getName()+ " погрузил 100 единиц "+cargo.getTitle());
             isOnBoard = true;
         }else{
             if(cargo.getWeight()+productFromPort.getWeight() <= cargoMaxWeight) {
                 cargo.add(productFromPort.getWeight());
-                System.out.println(this.getName()+ " погрузил 100 единиц");
+                System.out.println(this.getName()+ " погрузил 100 единиц "+cargo.getTitle());
                 isOnBoard = true;
             }
         }
@@ -62,7 +62,7 @@ public class Ship  implements Runnable {
     public boolean isUnLoadOneUnit(int oneUnitWeight){
         if(cargo.getWeight() - oneUnitWeight >= 0) {
             cargo.subtract(oneUnitWeight);
-            System.out.println(this.getName()+ " разгрузил 100 единиц");
+            System.out.println(this.getName()+ " разгрузил 100 единиц "+cargo.getTitle());
 
             return true;
         }

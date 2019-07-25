@@ -15,4 +15,9 @@ public class Food extends Product {
     public Food clone() {
         return new Food(this.weight);
     }
+
+    @Override
+    public String getTitle() {
+        return "Food";
+    }
 }
