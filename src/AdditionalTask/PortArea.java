@@ -40,8 +40,12 @@ public class PortArea extends Semaphore {
                         port.loading(ship);
                         if (port.getProductsWeight() == 0) {
                             System.out.println(port.getPortName() + " пуст");
-                            this.reducePermits(1);
+
                             portsWithStaff.decrementAndGet();
+
+                            if(portsWithStaff.get() != 0){
+                                this.reducePermits(1);
+                            }
 
                         }
                         break;
@@ -54,6 +58,7 @@ public class PortArea extends Semaphore {
         finally {
             System.out.println(ship.getName() + " вышел из погрузки");
             this.release();
+
         }
         }else{
             System.err.println(ship.getName()+"возвращается домой пустой, он слишком долго плыл");
