@@ -51,5 +51,4 @@ public class Port{
         return reentrantLock.isLocked() && getProductsWeight()!=0;
     }
 
-
 }

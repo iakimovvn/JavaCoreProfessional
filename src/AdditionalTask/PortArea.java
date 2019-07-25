@@ -28,9 +28,9 @@ public class PortArea extends Semaphore {
                 if (this.availablePermits() == 0) {
                     System.out.println(ship.getName() + " ждет в очереди на погрузку");
                 }
-                System.out.println("Всего "+this.availablePermits()+" Cвободно ");
+                System.out.println("Свободно "+this.availablePermits()+"-"+ship.getName());
                 this.acquire();
-                System.out.println("Всего "+this.availablePermits()+" Cвободно ");
+                System.out.println("Всего "+this.availablePermits()+"-"+ship.getName());
 
                 System.out.println(ship.getName() + " получил разрешение на вход");
 

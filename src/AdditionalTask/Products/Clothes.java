@@ -14,17 +14,4 @@ public class Clothes extends Product {
     public Clothes clone() {
         return new Clothes(this.weight);
     }
-
-//    @Override
-//    public Clothes clone() {
-//        final Clothes clone;
-//        try {
-//            clone = (Clothes) super.clone();
-//        }
-//        catch (CloneNotSupportedException ex) {
-//            throw new RuntimeException("superclass messed up", ex);
-//        }
-//        clone.weight = this.weight;
-//        return clone;
-//    }
 }
