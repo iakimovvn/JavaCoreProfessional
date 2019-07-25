@@ -91,7 +91,7 @@ public class Ship  implements Runnable {
     @Override
     public void run() {
 
-        while (portArea.availablePermits()!= 0) {
+        while (portArea.getPortsWithStaff() > 0) {
             tripBetweenPorts();
 
             portArea.loadingLine(Ship.this);

@@ -10,7 +10,7 @@ public class Port{
     private String portName;
 
     private Product product;
-    ReentrantLock reentrantLock;
+    private ReentrantLock reentrantLock;
 
     public Port(String portName, Product product, Product weightOneLoading) {
         this.portName = portName;
@@ -46,4 +46,10 @@ public class Port{
     public String getPortName() {
         return portName;
     }
+
+    public synchronized boolean isPortLocked(){
+        return reentrantLock.isLocked() && getProductsWeight()!=0;
+    }
+
+
 }

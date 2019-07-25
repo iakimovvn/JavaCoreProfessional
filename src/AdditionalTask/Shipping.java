@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
 
 public class Shipping {
 
-    private final int SHIP_QUANTITY = 6;
+    private final int SHIP_QUANTITY = 5;
 
     protected PortArea portArea;
     protected CentralPort centralPort;
@@ -27,17 +27,17 @@ public class Shipping {
         cyclicBarrier = new CyclicBarrier(SHIP_QUANTITY,centralPort :: info);
 
 
-//        ExecutorService pool = Executors.newFixedThreadPool(SHIP_QUANTITY);
-//        for (int i = 1; i <=SHIP_QUANTITY; i++) {
-//            pool.submit(new Ship("Корабль-"+i,900,900,
-//                    800, this));
-//        }
-
         ExecutorService pool = Executors.newFixedThreadPool(SHIP_QUANTITY);
         for (int i = 1; i <=SHIP_QUANTITY; i++) {
-            pool.submit(new Ship("Корабль-"+i,100*(int)(Math.random()*7+1),100*(int)(Math.random()*7+1),
-                    100*(int)(Math.random()*7+1), this));
+            pool.submit(new Ship("Корабль-"+i,1900,2900,
+                    1800, this));
         }
+
+//        ExecutorService pool = Executors.newFixedThreadPool(SHIP_QUANTITY);
+//        for (int i = 1; i <=SHIP_QUANTITY; i++) {
+//            pool.submit(new Ship("Корабль-"+i,100*(int)(Math.random()*7+1),100*(int)(Math.random()*7+1),
+//                    100*(int)(Math.random()*7+1), this));
+//        }
 
         pool.shutdown();
     }
