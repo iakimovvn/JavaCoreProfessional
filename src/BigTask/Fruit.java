@@ -1,0 +1,5 @@
+package BigTask;
+
+public abstract class Fruit {
+    public abstract float getWeight();
+}
